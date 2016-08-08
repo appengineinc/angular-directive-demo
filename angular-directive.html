@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+</head>
+<body ng-app="demotransclude">
+  <script>
+  angular.module('demotransclude', [])
+   .directive('pane', function(){
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: { msgbefore:'@', msgafter: '@' },
+        template: '<div >' +
+                    '<div>{{msgbefore}}</div><p style="color:red">' +
+                    '<ng-transclude></ng-transclude>' +
+                    '</p></div>{{msgafter}}</div>' +
+                  '</div>'
+      };
+  })
+  .controller('demoTranscludeController', ['$scope', function($scope) {
+    $scope.msgbefore = 'There has been an error: the error is:';
+    $scope.msgafter = 'Please call helpdesk.';
+    $scope.errormsg = 'error msg goes here';
+    $scope.error = false;
+    $scope.toggleError = function() {
+      if ($scope.error)
+        $scope.error = false; else $scope.error=true;
+    };
+    
+    $scope.createError = function() {
+      $scope.error = false;
+      try {
+          throw("db connection error");  
+      }catch(e) {
+        $scope.error = true;
+        $scope.errormsg = e;
+      }
+    };
+    
+  }]);
+</script>
+<div ng-controller="demoTranscludeController">
+  <div ng-if="error">
+  <pane msgBefore="{{msgbefore}}" msgafter="{{msgafter}}"><span>{{errormsg}}</span></pane>
+  </div>
+  <p>
+  <button ng-click="toggleError()">Click me</button>
+  <button ng-click="createError()">Create Error</button>
+  </p>
+</div>
+</body>
+</html>
