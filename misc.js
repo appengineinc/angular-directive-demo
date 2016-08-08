@@ -3,6 +3,7 @@
 <script>
 
 //new way 
+var startIndex = 2, noItems = 3; 
 function testSplice(a) {
   //alert(arguments.length);
   if (arguments.length > 5) {
