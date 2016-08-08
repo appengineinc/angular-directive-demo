@@ -1,6 +1,16 @@
 <html>
 <head>
 <script>
+
+//new way 
+function testSplice(a) {
+  //alert(arguments.length);
+  if (arguments.length > 5) {
+    var ary = Array.prototype.slice.call(arguments);
+    alert(ary.splice(startIndex, noItems));
+  }
+}
+//old way
 function testRecur() {
   var recordIndexStart = recordIndex = 2,  pageSize = 3 /* num of records to fetch*/,  output="", cachedRecords;  	
   (function test(a) {
@@ -22,6 +32,7 @@ function testRecur() {
 </script>
 </head>
 <body>
-  <button onclick="testRecur()">click me to test</button>
+  <button onclick="testSplice(1,2,3,4,5,6,7,8,9)">click to splice me</button>
+  <button onclick="testRecur()">click me to test recurr</button>
   </body>
 </html>
